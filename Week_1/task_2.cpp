@@ -2,5 +2,5 @@
 
 int doing()
 {
-	std::cout << "This is feature's branch" << std::endl;
+	//This is master's branch
 }
