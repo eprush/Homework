@@ -2,7 +2,7 @@
 
 int doing()
 {
-	//This is master's branch
+	//This is feature_2's branch
 }
 
 void f()
