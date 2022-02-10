@@ -7,5 +7,5 @@ int doing()
 
 void f()
 {
-
+	std::cout << "Hello" << std::endl;
 }
