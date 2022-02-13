@@ -33,13 +33,17 @@ public:
 		}
 	}
 
-	microseconds_t time()
+	const microseconds_t& time() const noexcept
 	{
 		return m_time;
 	}
+	double delta_time(time_point_t& delta_time)
+	{
+		return std::chrono::duration_cast <microseconds_t> (delta_time).count();
+	}
 
 private:
-	void print_time(microseconds_t delta_time)
+	void print_time(const microseconds_t& delta_time)
 	{
 		std::cout << "The working time of this section of the code is equal " << delta_time.count() << " microseconds" << std::endl;
 		std::cout << "The working time of all code is equal " << m_time.count() << " microseconds" << std::endl;
