@@ -10,7 +10,7 @@ private:
 	using microseconds_t = std::chrono::microseconds;
 
 public:
-	explicit Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(true) {}
+	explicit Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(false) {}
 	~Timer() noexcept
 	{
 		pause();
