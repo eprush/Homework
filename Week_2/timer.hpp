@@ -16,13 +16,13 @@ public:
 		pause();
 	}
 
-	void pause(std::string code = "this section of the code")
+	void pause()
 	{
 		if (m_turned_on)
 		{
 			microseconds_t delta_time(std::chrono::duration_cast <microseconds_t> (clock_t::now() - m_begin).count());
 			m_time += delta_time;
-			print_time(delta_time, code);
+			print_time(delta_time);
 		}
 	}
 	void resume()
@@ -39,9 +39,9 @@ public:
 	}
 
 private:
-	void print_time(microseconds_t delta_time, std::string code = "this section of the code")
+	void print_time(microseconds_t delta_time)
 	{
-		std::cout << "The working time of the " <<  code << " is equal " <<  delta_time.count() << " microseconds" << std::endl;
+		std::cout << "The working time of this section of the code is equal " << delta_time.count() << " microseconds" << std::endl;
 		std::cout << "The working time of all code is equal " << m_time.count() << " microseconds" << std::endl;
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <chrono>
+#include <exception>
 
 class Timer
 {
@@ -10,10 +11,17 @@ private:
 	using microseconds_t = std::chrono::microseconds;
 
 public:
-	explicit Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(false) {}
-	~Timer() noexcept
+	Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(false) {}
+	~Timer()
 	{
-		pause();
+		try
+		{
+			pause();
+		}
+		catch (...)
+		{
+			std::cerr << "Unknown error in " << __LINE__ << " line" << std::endl;
+		}
 	}
 
 	void pause()
