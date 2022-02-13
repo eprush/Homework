@@ -13,6 +13,14 @@ int main()
 	}
 	std::cout << "The capacity of the vector changes by " << v.capacity() / capacity << std::endl;
 
+	v.reserve(4);
+	capacity = 4;
+	for (auto i = 2; i < 10; ++i)
+	{
+		v.push_back(i);
+		std::cout << v.capacity() / capacity << std::endl;
+	}
+
 	system("pause");
 	return EXIT_SUCCESS;
 }
