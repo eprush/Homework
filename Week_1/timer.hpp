@@ -12,7 +12,7 @@ private:
 
 public:
 	Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(false) {}
-	~Timer()
+	~Timer() noexcept
 	{
 		try
 		{
