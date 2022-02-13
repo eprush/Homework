@@ -1,11 +1,17 @@
 #include "timer.hpp"
-#include <array>
-#include <random> 
-#include <algorithm> 
+#include <random>
 #include <iterator> 
 #include <vector> 
 #include <list>
-#include <cstddef>
+#include <forward_list>
+#include <array>
+#include <deque>
+
+#define DEQUE std::deque<int>
+#define LIST std::list<int>
+#define FORWARD_LIST std::forward_list<int>
+#define VECTOR std::vector<int>
+#define ITERATOR ::iterator
 
 int main()
 {
