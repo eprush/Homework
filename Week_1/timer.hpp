@@ -28,6 +28,7 @@ public:
 	{
 		if (m_turned_on)
 		{
+			m_turned_on = false;
 			microseconds_t delta_time(std::chrono::duration_cast <microseconds_t> (clock_t::now() - m_begin).count());
 			m_time += delta_time;
 			print_time(delta_time);
@@ -37,6 +38,7 @@ public:
 	{
 		if (!m_turned_on)
 		{
+			m_turned_on = true;
 			m_begin = clock_t::now();
 		}
 	}
