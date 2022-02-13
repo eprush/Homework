@@ -12,16 +12,18 @@ int main()
 		std::cout << "The capacity of the vector changes by " << static_cast<double>(v.capacity()) / capacity << std::endl;
 		capacity = v.capacity();
 	}
-	std::cout << "The capacity of the vector changes by " << v.capacity() / capacity << std::endl;
+	//obviously, capacity increases by 1.5 times
+	//because changing of capacity have means like 2 ; 1.5 ; 1.333 ; 1.5 on console
 
-	v.reserve(4);
-	capacity = 4;
-	for (auto i = 2; i < 10; ++i)
+	v.reserve(6);
+	capacity = 6;
+	for (auto i = 5; i < 11; ++i)
 	{
 		v.push_back(i);
 		std::cout << static_cast <double> (v.capacity()) / capacity << std::endl;
 		capacity = v.capacity();
 	}
+	//after reserve capacity also increases by 1.5 times
 
 	system("pause");
 	return EXIT_SUCCESS;
