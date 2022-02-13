@@ -18,6 +18,9 @@
     <ClCompile Include="task_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="task_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timer.hpp">

@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="task_1.cpp" />
+    <ClCompile Include="task_2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timer.hpp" />
