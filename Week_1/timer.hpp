@@ -43,7 +43,7 @@ public:
 		}
 	}
 
-	microseconds_t time()
+	const auto& time() const noexcept
 	{
 		return m_time;
 	}
