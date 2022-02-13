@@ -16,7 +16,7 @@ public:
 		pause();
 	}
 
-	void pause(std::string code)
+	void pause(std::string code = "this section of the code")
 	{
 		if (m_turned_on)
 		{
