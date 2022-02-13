@@ -1,6 +1,7 @@
 #include "timer.hpp"
 #include <random>
 #include <iterator> 
+#include <algorithm>
 #include <vector> 
 #include <list>
 #include <forward_list>
