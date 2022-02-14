@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <chrono>
+#include <exception>
 
 class Timer
 {
@@ -10,19 +11,28 @@ private:
 	using microseconds_t = std::chrono::microseconds;
 
 public:
-	explicit Timer() :m_begin(clock_t::now()), m_time(0), m_turned_on(false) {}
+	Timer() :m_begin(clock_t::now()), m_time(0),m_delta(0), m_turned_on(false) {}
 	~Timer() noexcept
 	{
-		pause();
+		try
+		{
+			pause();
+		}
+		catch (...)
+		{
+			std::cerr << "Unknown error in " << __LINE__ << " line" << std::endl;
+		}
 	}
 
 	void pause()
 	{
 		if (m_turned_on)
 		{
-			microseconds_t delta_time(std::chrono::duration_cast <microseconds_t> (clock_t::now() - m_begin).count());
+			m_delta = std::chrono::duration_cast <microseconds_t> (clock_t::now() - m_begin).count();
+			m_turned_on = false;
+			microseconds_t delta_time(m_delta);
 			m_time += delta_time;
-			print_time(delta_time);
+			print_time(m_delta);
 		}
 	}
 	void resume()
@@ -30,27 +40,29 @@ public:
 		if (!m_turned_on)
 		{
 			m_begin = clock_t::now();
+			m_turned_on = true;
 		}
 	}
 
-	const microseconds_t& time() const noexcept
+	const auto& time() const noexcept
 	{
 		return m_time;
 	}
-	double delta_time(time_point_t& delta_time)
+	long long delta_time() const noexcept
 	{
-		return std::chrono::duration_cast <microseconds_t> (delta_time).count();
+		return m_delta;
 	}
 
 private:
-	void print_time(const microseconds_t& delta_time)
+	void print_time(long long delta_time)
 	{
-		std::cout << "The working time of this section of the code is equal " << delta_time.count() << " microseconds" << std::endl;
+		std::cout << "The working time of this section of the code is equal " << delta_time << " microseconds" << std::endl;
 		std::cout << "The working time of all code is equal " << m_time.count() << " microseconds" << std::endl;
 	}
 
 private:
 	time_point_t m_begin;
 	microseconds_t m_time;
+	long long m_delta;
 	bool m_turned_on;
 };
