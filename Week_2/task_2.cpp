@@ -59,6 +59,24 @@ int main()
     forward_list.sort();
     t.pause();
 
+    t.resume();
+    std::sort(deque.begin(), deque.begin() + 100);
+    t.pause();
+    //some results of measures
+    //26 25 49 29 85  microseconds
+    //28 31 45 23 112  microseconds
+    //25 14 21 16 79  microseconds
+    //26 22 25 20 83  microseconds
+    //34 16 36 26 88  microseconds
+
+    //average time
+    std::cout << (26 + 28 + 25 + 26 + 34) / 5.0 << std::endl <<
+        (25 + 31 + 14 + 22 + 16) / 5.0 << std::endl <<
+        (49 + 45 + 21 + 25 + 36) / 5.0 << std::endl <<
+        (29 + 23 + 16 + 20 + 26) / 5.0 << std::endl <<
+        (85 + 112 + 79 + 83 + 88) / 5.0 << std::endl;
+    //the fastest sort is sort in std::list
+
 	system("pause");
 	return EXIT_SUCCESS;
 }
