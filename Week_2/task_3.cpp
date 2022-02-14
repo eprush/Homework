@@ -6,7 +6,7 @@
 
 #include <boost/multi_array.hpp>
 
-template < auto N, typename Container, typename Forward_Iterator >
+template < std::size_t N, typename Container, typename Forward_Iterator >
 void fill_shape(const Container & container, Forward_Iterator shape)
 {
 	*shape = std::size(container);
@@ -17,7 +17,7 @@ void fill_shape(const Container & container, Forward_Iterator shape)
 	}
 }
 
-template < auto N, typename Container, typename Forward_Iterator >
+template < std::size_t N, typename Container, typename Forward_Iterator >
 void fill_multi_array(const Container & container, Forward_Iterator multi_array)
 {
 	// Write your code here ...
@@ -29,7 +29,7 @@ void fill_multi_array(const Container & container, Forward_Iterator multi_array)
 	// Enjoy debugging!
 }
 
-template < typename T, auto N, typename Container >
+template < typename T, std::size_t N, typename Container >
 auto make_multi_array(const Container & container)
 {
 	using multi_array_t = boost::multi_array < T, N > ;
