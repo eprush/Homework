@@ -11,21 +11,21 @@
 int main()
 {
     std::mt19937 gen{ std::random_device()() };
-    std::uniform_int_distribution<int> uid(0, 10000);
-    std::vector<int> v(10000);
-    std::generate(v.begin(), v.begin() + 10000, [&uid, &gen]() -> int
-        { return uid(gen); }); //generate 10000 random number
+    std::uniform_int_distribution<int> uid(0, 100000);
+    std::vector<int> v(100000);
+    std::generate(v.begin(), v.begin() + 100000, [&uid, &gen]() -> int
+        { return uid(gen); }); //generate 100000 random number
 
-    std::array<int, 10000> array;
-    std::list<int>  list(10000);
-    std::forward_list<int> forward_list(10000);
-    std::deque<int> deque(10000);
+    std::array<int, 100000> array;
+    std::list<int>  list(100000);
+    std::forward_list<int> forward_list(100000);
+    std::deque<int> deque(100000);
 
     std::deque<int>::iterator it_d = deque.begin();
     std::forward_list<int>::iterator it_f = forward_list.begin();
     std::list<int>::iterator it_l = list.begin();
     std::vector<int>::iterator it_v = v.begin();
-    std::array<int, 10000>::iterator it_array = array.begin();
+    std::array<int, 100000>::iterator it_array = array.begin();
 
     while (it_v != v.end())//copy vector
     {
@@ -38,7 +38,7 @@ int main()
 
     Timer t;
     t.resume();
-    std::sort(v.begin(), v.begin() + 100);
+    std::sort(v.begin(), v.begin() + 100000);
     t.pause();
 
     t.resume();
@@ -46,7 +46,7 @@ int main()
     t.pause();
 
     t.resume();
-    std::sort(array.begin(), array.begin() + 100);
+    std::sort(array.begin(), array.begin() + 100000);
     t.pause();
 
     t.resume();
@@ -54,21 +54,21 @@ int main()
     t.pause();
 
     t.resume();
-    std::sort(deque.begin(), deque.begin() + 100);
+    std::sort(deque.begin(), deque.begin() + 100000);
     t.pause();
     //some results of measures
-    //26 25 49 29 85  microseconds
-    //28 31 45 23 112  microseconds
-    //25 14 21 16 79  microseconds
-    //26 22 25 20 83  microseconds
-    //34 16 36 26 88  microseconds
+    //23 38 25 25 93 microseconds
+    //22 15 23 21 80 microseconds
+    //31 22 29 42 116  microseconds
+    //26 17 27 18 117  microseconds
+    //24 18 43 21 89  microseconds
 
     //average time
-    std::cout << (26 + 28 + 25 + 26 + 34) / 5.0 << std::endl <<
-        (25 + 31 + 14 + 22 + 16) / 5.0 << std::endl <<
-        (49 + 45 + 21 + 25 + 36) / 5.0 << std::endl <<
-        (29 + 23 + 16 + 20 + 26) / 5.0 << std::endl <<
-        (85 + 112 + 79 + 83 + 88) / 5.0 << std::endl;
+    std::cout << (23 + 22 +  31 +  26 + 24) / 5.0 << std::endl
+        << (38 + 15 + 22 + 17 + 18) / 5.0 << std::endl
+        << (25 + 23 + 29 + 27 + 43) / 5.0 << std::endl
+        << (25 + 21 + 42 + 18 + 31) / 5.0 << std::endl
+        << (93 + 80 + 116 + 117 + 89) / 5.0 << std::endl;
     //the fastest sort is sort in std::list
 
 	system("pause");
