@@ -26,13 +26,13 @@ int main()
 	//after reserve capacity also increases by 1.5 times
 
 
-	v.reserve(10000);
-	for (auto i = 5; i < 10000; ++i)
+	v.reserve(10000000);
+	for (auto i = 5; i < 10000000000; ++i)
 	{
 		v.push_back(i);
 	}
 
-	capacity = 10000;
+	capacity = 10000000000;
 	while (true)
 	{
 		v.push_back(1);

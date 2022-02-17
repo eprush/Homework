@@ -3,7 +3,6 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
-
 #include <boost/multi_array.hpp>
 
 template < std::size_t N, typename Container, typename Forward_Iterator >
@@ -67,10 +66,8 @@ int main(int argc, char ** argv)
 			{
 				std::cout << std::setw(2) << std::right << (v[i][j][k] = ++counter) << " ";
 			}
-
 			std::cout << std::endl;
 		}
-
 		std::cout << std::endl;
 	}
 
