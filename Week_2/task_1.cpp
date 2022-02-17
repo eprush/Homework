@@ -25,6 +25,24 @@ int main()
 	}
 	//after reserve capacity also increases by 1.5 times
 
+
+	v.reserve(10000);
+	for (auto i = 5; i < 10000; ++i)
+	{
+		v.push_back(i);
+	}
+
+	capacity = 10000;
+	while (true)
+	{
+		v.push_back(1);
+		if (v.capacity() != capacity)
+		{
+			std::cout << static_cast<double> (v.capacity())/capacity << std::endl;
+			capacity = v.capacity();
+		}
+	}
+	//in while capacity changes by 1.5 times
 	system("pause");
 	return EXIT_SUCCESS;
 }
