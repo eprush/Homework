@@ -11,21 +11,21 @@
 int main()
 {
     std::mt19937 gen{ std::random_device()() };
-    std::uniform_int_distribution<int> uid(0, 100);
-    std::vector<int> v(100);
-    std::generate(v.begin(), v.begin() + 100, [&uid, &gen]() -> int
-        { return uid(gen); }); //generate 100 random number
+    std::uniform_int_distribution<int> uid(0, 10000);
+    std::vector<int> v(10000);
+    std::generate(v.begin(), v.begin() + 10000, [&uid, &gen]() -> int
+        { return uid(gen); }); //generate 10000 random number
 
-    std::array<int, 100> array;
-    std::list<int>  list(100);
-    std::forward_list<int> forward_list(100);
-    std::deque<int> deque(100);
+    std::array<int, 10000> array;
+    std::list<int>  list(10000);
+    std::forward_list<int> forward_list(10000);
+    std::deque<int> deque(10000);
 
     std::deque<int>::iterator it_d = deque.begin();
     std::forward_list<int>::iterator it_f = forward_list.begin();
     std::list<int>::iterator it_l = list.begin();
     std::vector<int>::iterator it_v = v.begin();
-    std::array<int, 100>::iterator it_array = array.begin();
+    std::array<int, 10000>::iterator it_array = array.begin();
 
     while (it_v != v.end())//copy vector
     {
