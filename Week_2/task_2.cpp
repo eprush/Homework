@@ -8,29 +8,23 @@
 #include <array>
 #include <deque>
 
-#define DEQUE std::deque<int>
-#define LIST std::list<int>
-#define FORWARD_LIST std::forward_list<int>
-#define VECTOR std::vector<int>
-#define ITERATOR ::iterator
-
 int main()
 {
     std::mt19937 gen{ std::random_device()() };
     std::uniform_int_distribution<int> uid(0, 100);
-    VECTOR v(100);
+    std::vector<int> v(100);
     std::generate(v.begin(), v.begin() + 100, [&uid, &gen]() -> int
         { return uid(gen); }); //generate 100 random number
 
     std::array<int, 100> array;
-    LIST  list(100);
-    FORWARD_LIST forward_list(100);
-    DEQUE deque(100);
+    std::list<int>  list(100);
+    std::forward_list<int> forward_list(100);
+    std::deque<int> deque(100);
 
-    DEQUE ITERATOR it_d = deque.begin();
-    FORWARD_LIST ITERATOR it_f = forward_list.begin();
-    LIST ITERATOR it_l = list.begin();
-    VECTOR ITERATOR it_v = v.begin();
+    std::deque<int>::iterator it_d = deque.begin();
+    std::forward_list<int>::iterator it_f = forward_list.begin();
+    std::list<int>::iterator it_l = list.begin();
+    std::vector<int>::iterator it_v = v.begin();
     std::array<int, 100>::iterator it_array = array.begin();
 
     while (it_v != v.end())//copy vector
