@@ -16,24 +16,19 @@ int main()
     std::generate(v.begin(), v.begin() + 100000, [&uid, &gen]() -> int
         { return uid(gen); }); //generate 100000 random number
 
+    std::vector<int>::iterator begin = v.begin();
+    std::vector<int>::iterator end = v.end();
     std::array<int, 100000> array;
-    std::list<int>  list(100000);
-    std::forward_list<int> forward_list(100000);
-    std::deque<int> deque(100000);
+    std::list<int>  list(begin, end);
+    std::forward_list<int> forward_list(begin, end);
+    std::deque<int> deque(begin, end);
 
-    std::deque<int>::iterator it_d = deque.begin();
-    std::forward_list<int>::iterator it_f = forward_list.begin();
-    std::list<int>::iterator it_l = list.begin();
-    std::vector<int>::iterator it_v = v.begin();
     std::array<int, 100000>::iterator it_array = array.begin();
 
-    while (it_v != v.end())//copy vector
+    while (begin != end)//copy vector
     {
-        *it_d = *it_v;
-        *it_f = *it_v;
-        *it_l = *it_v;
-        *it_array = *it_v;
-        ++it_v, ++it_d, ++it_f, ++it_l, ++it_array;
+        *it_array = *begin;
+        ++begin, ++it_array;
     }
 
     Timer t;
