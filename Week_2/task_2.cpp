@@ -1,6 +1,7 @@
 #include "timer.hpp"
 #include <random>
 #include <iterator> 
+#include <iomanip>
 #include <algorithm>
 #include <vector> 
 #include <list>
@@ -10,62 +11,65 @@
 
 int main()
 {
-    std::mt19937 gen{ std::random_device()() };
-    std::uniform_int_distribution<int> uid(0, 100000);
-    std::vector<int> v(100000);
-    std::generate(v.begin(), v.begin() + 100000, [&uid, &gen]() -> int
-        { return uid(gen); }); //generate 100000 random number
-
-    std::vector<int>::iterator begin = v.begin();
-    std::vector<int>::iterator end = v.end();
-    std::array<int, 100000> array;
-    std::list<int>  list(begin, end);
-    std::forward_list<int> forward_list(begin, end);
-    std::deque<int> deque(begin, end);
-
-    std::array<int, 100000>::iterator it_array = array.begin();
-
-    while (begin != end)//copy vector
-    {
-        *it_array = *begin;
-        ++begin, ++it_array;
-    }
-
+    const int count = 100000;
     Timer t;
-    t.resume();
-    std::sort(v.begin(), v.begin() + 100000);
-    t.pause();
+    long long vector_time = 0, deque_time = 0, array_time = 0, list_time = 0, forward_list_time = 0;
+    for (auto j = 0U; j < 10; ++j)
+    {
+        std::mt19937 gen{ std::random_device()() };
+        std::uniform_int_distribution<int> uid(0, count);
+        std::vector<int> v(count);
+        std::vector<int>::iterator begin = v.begin();
+        std::vector<int>::iterator end = v.end();
+        std::generate(begin, end, [&uid, &gen]() -> int
+            { return uid(gen); }); //generate 100000 random number
 
-    t.resume();
-    list.sort();
-    t.pause();
+        std::array<int, count> array;
+        std::list<int>  list(begin, end);
+        std::forward_list<int> forward_list(begin, end);
+        std::deque<int> deque(begin, end);
 
-    t.resume();
-    std::sort(array.begin(), array.begin() + 100000);
-    t.pause();
+        std::array<int, count>::iterator it_array = array.begin();
 
-    t.resume();
-    forward_list.sort();
-    t.pause();
+        while (begin != end)//copy vector
+        {
+            *it_array = *begin;
+            ++begin, ++it_array;
+        }
 
-    t.resume();
-    std::sort(deque.begin(), deque.begin() + 100000);
-    t.pause();
-    //some results of measures
-    //23 38 25 25 93 microseconds
-    //22 15 23 21 80 microseconds
-    //31 22 29 42 116  microseconds
-    //26 17 27 18 117  microseconds
-    //24 18 43 21 89  microseconds
+        t.resume();
+        std::sort(v.begin(), v.begin() + 100000);
+        t.pause();
+        vector_time += t.delta_time();
 
-    //average time
-    std::cout << (23 + 22 +  31 +  26 + 24) / 5.0 << std::endl
-        << (38 + 15 + 22 + 17 + 18) / 5.0 << std::endl
-        << (25 + 23 + 29 + 27 + 43) / 5.0 << std::endl
-        << (25 + 21 + 42 + 18 + 31) / 5.0 << std::endl
-        << (93 + 80 + 116 + 117 + 89) / 5.0 << std::endl;
-    //the fastest sort is sort in std::list
+        t.resume();
+        list.sort();
+        t.pause();
+        list_time += t.delta_time();
 
+        t.resume();
+        std::sort(array.begin(), array.begin() + 100000);
+        t.pause();
+        array_time += t.delta_time();
+
+        t.resume();
+        forward_list.sort();
+        t.pause();
+        forward_list_time += t.delta_time();
+
+        t.resume();
+        std::sort(deque.begin(), deque.begin() + 100000);
+        t.pause();
+        deque_time += t.delta_time();
+    }
+   
+    std::cout << "Average vector sorting time equals " << std::setw(2) << std::right << vector_time / 10.0 << " microseconds" << std::endl <<   
+        "Average deque sorting time equals " << std::setw(2) << std::right << deque_time / 10.0 << " microseconds" << std::endl <<              
+        "Average list sorting time equals " << std::setw(4) << std::right << list_time / 10.0 << " microseconds" << std::endl <<                
+        "Average forward_list sorting time equals " << std::setw(2) << std::right << forward_list_time / 10.0 << " microseconds" << std::endl <<
+        "Average array sorting time equals " << std::setw(2) << std::right << array_time / 10.0 << " microseconds" << std::endl;                
+
+    //most often the vector is the fastest but sometimes the array is faster
 	system("pause");
 	return EXIT_SUCCESS;
 }
