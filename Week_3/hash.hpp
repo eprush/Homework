@@ -6,23 +6,23 @@
 #include "boost/container_hash/hash.hpp"
 
 template < typename T >
-void hash_value(const T& value, std::size_t& seed = 0) noexcept
+void hash_value(std::size_t& seed, const T& value) noexcept
 {
-    hash_combine(value, seed);
+    boost::hash_combine(seed, value);
 }
 
 template < typename T, typename ... Types >
-void hash_value( const T& value, const Types & ... args, std::size_t& seed = 0) noexcept
+void hash_value(std::size_t& seed, const T& value, const Types & ... args) noexcept
 {
-    boost::hash_combine(seed, value);
-    hash_value(args..., seed);
+    hash_value(seed, value);
+    hash_value(seed, args...);
 }
 
 template < typename ... Types >
 std::size_t hash_value(const Types & ... args) noexcept
 {
     std::size_t seed = 0;
-    hash_value(args..., seed);
+    hash_value(seed, args...);
     return seed;
 }
 
