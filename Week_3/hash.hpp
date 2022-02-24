@@ -28,6 +28,7 @@ std::size_t hash_value(const Types & ... args) noexcept
 
 std::size_t RSHash(std::string str, std::size_t length)
 {
+    std::cout << "RSHash" << std::endl;
     const std::size_t b = 378551;
     std::size_t a = 63689;
     std::size_t hash = 0;
@@ -44,6 +45,7 @@ std::size_t RSHash(std::string str, std::size_t length)
 
 std::size_t JSHash(std::string str, std::size_t length)
 {
+    std::cout << "JSHash" << std::endl;
     std::size_t hash = 1315423911;
     std::string::iterator begin = str.begin();
 
@@ -57,6 +59,7 @@ std::size_t JSHash(std::string str, std::size_t length)
 
 std::size_t PJWHash(std::string str, std::size_t length)
 {
+    std::cout << "PJWHash" << std::endl;
     const std::size_t BitsInUnsignedInt = (std::size_t)(sizeof(std::size_t) * 8);
     const std::size_t ThreeQuarters = (std::size_t)((BitsInUnsignedInt * 3) / 4);
     const std::size_t OneEighth = (std::size_t)(BitsInUnsignedInt / 8);
@@ -81,6 +84,7 @@ std::size_t PJWHash(std::string str, std::size_t length)
 
 std::size_t ELFHash(std::string str, std::size_t length)
 {
+    std::cout << "ELFHash" << std::endl;
     std::size_t hash = 0;
     std::size_t x = 0;
     std::string::iterator begin = str.begin();
@@ -102,6 +106,7 @@ std::size_t ELFHash(std::string str, std::size_t length)
 
 std::size_t BKDRHash(std::string str, std::size_t length)
 {
+    std::cout << "BKDRHash" << std::endl;
     std::size_t seed = 131; /* 31 131 1313 13131 131313 etc.. */
     std::size_t hash = 0;
     std::string::iterator begin = str.begin();
@@ -116,6 +121,7 @@ std::size_t BKDRHash(std::string str, std::size_t length)
 
 std::size_t SDBMHash(std::string str, std::size_t length)
 {
+    std::cout << "SDBMHash" << std::endl;
     std::size_t hash = 0;
     std::string::iterator begin = str.begin();
 
@@ -129,6 +135,7 @@ std::size_t SDBMHash(std::string str, std::size_t length)
 
 std::size_t DJBHash(std::string str, std::size_t length)
 {
+    std::cout << "DJBHash" << std::endl;
     std::size_t hash = 5381;
     std::string::iterator begin = str.begin();
 
@@ -142,6 +149,7 @@ std::size_t DJBHash(std::string str, std::size_t length)
 
 std::size_t DEKHash(std::string str, std::size_t length)
 {
+    std::cout << "DEKHash" << std::endl;
     std::size_t hash = length;
     std::string::iterator begin = str.begin();
 
@@ -155,6 +163,7 @@ std::size_t DEKHash(std::string str, std::size_t length)
 
 std::size_t APHash(std::string str, std::size_t length)
 {
+    std::cout << "APHash" << std::endl;
     std::size_t hash = 0xAAAAAAAA;
     std::string::iterator begin = str.begin();
 
