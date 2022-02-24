@@ -26,36 +26,36 @@ std::size_t hash_value(const Types & ... args) noexcept
     return seed;
 }
 
-std::size_t RSHash(const char* str, std::size_t length)
+std::size_t RSHash(std::string str, std::size_t length)
 {
-    std::size_t b = 378551;
+    const std::size_t b = 378551;
     std::size_t a = 63689;
     std::size_t hash = 0;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = hash * a + (*str);
-        a = a * b;
+        hash = hash * a + (*begin);
+        a *= b;
     }
 
     return hash;
 }
 
-std::size_t JSHash(const char* str, std::size_t length)
+std::size_t JSHash(std::string str, std::size_t length)
 {
     std::size_t hash = 1315423911;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0; i < length; ++begin, ++i)
     {
-        hash ^= ((hash << 5) + (*str) + (hash >> 2));
+        hash ^= ((hash << 5) + (*begin) + (hash >> 2));
     }
 
     return hash;
 }
 
-std::size_t PJWHash(const char* str, std::size_t length)
+std::size_t PJWHash(std::string str, std::size_t length)
 {
     const std::size_t BitsInUnsignedInt = (std::size_t)(sizeof(std::size_t) * 8);
     const std::size_t ThreeQuarters = (std::size_t)((BitsInUnsignedInt * 3) / 4);
@@ -64,11 +64,11 @@ std::size_t PJWHash(const char* str, std::size_t length)
         (std::size_t)(0xFFFFFFFF) << (BitsInUnsignedInt - OneEighth);
     std::size_t hash = 0;
     std::size_t test = 0;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = (hash << OneEighth) + (*str);
+        hash = (hash << OneEighth) + (*begin);
 
         if ((test = hash & HighBits) != 0)
         {
@@ -79,15 +79,15 @@ std::size_t PJWHash(const char* str, std::size_t length)
     return hash;
 }
 
-std::size_t ELFHash(const char* str, std::size_t length)
+std::size_t ELFHash(std::string str, std::size_t length)
 {
     std::size_t hash = 0;
     std::size_t x = 0;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = (hash << 4) + (*str);
+        hash = (hash << 4) + (*begin);
 
         if ((x = hash & 0xF0000000L) != 0)
         {
@@ -100,68 +100,68 @@ std::size_t ELFHash(const char* str, std::size_t length)
     return hash;
 }
 
-std::size_t BKDRHash(const char* str, std::size_t length)
+std::size_t BKDRHash(std::string str, std::size_t length)
 {
     std::size_t seed = 131; /* 31 131 1313 13131 131313 etc.. */
     std::size_t hash = 0;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = (hash * seed) + (*str);
+        hash = (hash * seed) + (*begin);
     }
 
     return hash;
 }
 
-std::size_t SDBMHash(const char* str, std::size_t length)
+std::size_t SDBMHash(std::string str, std::size_t length)
 {
     std::size_t hash = 0;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = (*str) + (hash << 6) + (hash << 16) - hash;
+        hash = (*begin) + (hash << 6) + (hash << 16) - hash;
     }
 
     return hash;
 }
 
-std::size_t DJBHash(const char* str, std::size_t length)
+std::size_t DJBHash(std::string str, std::size_t length)
 {
     std::size_t hash = 5381;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = ((hash << 5) + hash) + (*str);
+        hash = ((hash << 5) + hash) + (*begin);
     }
 
     return hash;
 }
 
-std::size_t DEKHash(const char* str, std::size_t length)
+std::size_t DEKHash(std::string str, std::size_t length)
 {
     std::size_t hash = length;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash = ((hash << 5) ^ (hash >> 27)) ^ (*str);
+        hash = ((hash << 5) ^ (hash >> 27)) ^ (*begin);
     }
 
     return hash;
 }
 
-std::size_t APHash(const char* str, std::size_t length)
+std::size_t APHash(std::string str, std::size_t length)
 {
     std::size_t hash = 0xAAAAAAAA;
-    std::size_t i = 0;
+    std::string::iterator begin = str.begin();
 
-    for (i = 0; i < length; ++str, ++i)
+    for (auto i = 0U; i < length; ++begin, ++i)
     {
-        hash ^= ((i & 1) == 0) ? ((hash << 7) ^ (*str) * (hash >> 3)) :
-            (~((hash << 11) + ((*str) ^ (hash >> 5))));
+        hash ^= ((i & 1) == 0) ? ((hash << 7) ^ (*begin) * (hash >> 3)) :
+            (~((hash << 11) + ((*begin) ^ (hash >> 5))));
     }
 
     return hash;
