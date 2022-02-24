@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include "hash.hpp"
 
 int main()
@@ -19,11 +20,12 @@ int main()
 
 	std::set <std::string> words = make_random_words(count_of_elements);
 	std::set<std::string>::iterator word = words.begin();
+	std::size_t hash = 0;
 
 	for (; begin != end; ++begin, ++word)
 	{
-		std::size_t hash = hash_value(*begin, *word);
-		if ((s.insert(hash)).second) {}
+		hash = hash_value(*begin, *word)%count_of_elements;
+		if ((s.insert(hash)).second){}
 		else
 		{
 			++count_of_collisions;
@@ -36,7 +38,9 @@ int main()
 				std::endl;
 		}
 	}
-	std::cout << count_of_collisions << std::endl;
+	std::cout << "Count of elements equals " << count_of_elements - (end - begin) << std::endl <<
+		"Count of collisions equals " << count_of_collisions << std::endl <<
+		std::endl;
 
 	system("pause");
 	return EXIT_SUCCESS;
