@@ -1,13 +1,16 @@
 #include <iostream>
 #include <array>
 #include <iterator>
-#include "hash.hpp"
+#include "words.hpp"
+#include "9_hash.hpp"
+
 
 int main()
 {
 	const std::size_t count_of_elements = 20000;
 	const std::size_t step = 2000;
-	std::set <std::string> words = make_random_words(count_of_elements);
+	const std::size_t length = 10;
+	std::set <std::string> words = make_random_words(count_of_elements, length);
 	std::set <std::string>::const_iterator end = words.end();
 	std::set <std::string>::const_iterator begin = words.begin();
 
@@ -15,9 +18,8 @@ int main()
 	using function = std::size_t(std::string, std::size_t);
 	std::array<function, count_of_function> function_array
 	{ RSHash , JSHash , PJWHash , ELFHash , BKDRHash , SDBMHash , DJBHash , DEKHash , APHash };
-	const std::size_t length = 10;
 
-	for (auto i = 0; i < count_of_function; ++i)
+	for (auto i = 0U; i < count_of_function; ++i)
 	{
 		std::set <std::size_t> for_hash;
 		std::set<std::string>::iterator word = begin;
@@ -43,7 +45,6 @@ int main()
 		std::cout << "Count of elements equals " << count_of_elements << std::endl <<
 			"Count of collisions equals " << count_of_collisions << std::endl <<
 			std::endl;
-
 	}
 
 	system("pause");
