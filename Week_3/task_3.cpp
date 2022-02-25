@@ -1,34 +1,29 @@
 #include <iostream>
-#include <array>
-#include <iterator>
 #include "words.hpp"
 #include "9_hash.hpp"
-
 
 int main()
 {
 	const std::size_t count_of_elements = 20000;
 	const std::size_t step = 2000;
 	const std::size_t length = 10;
-	std::set <std::string> words = make_random_words(count_of_elements, length);
+	const std::set <std::string> words = make_random_words(count_of_elements, length);
 	std::set <std::string>::const_iterator end = words.end();
 	std::set <std::string>::const_iterator begin = words.begin();
 
 	const std::size_t count_of_function = 9;
-	using function = std::size_t(std::string, std::size_t);
-	std::array<function, count_of_function> function_array
-	{ RSHash , JSHash , PJWHash , ELFHash , BKDRHash , SDBMHash , DJBHash , DEKHash , APHash };
-
-	for (auto i = 0U; i < count_of_function; ++i)
+	Function function;
+	std::size_t hash = 0;
+	for (auto i = 0U; i < count_of_function; )
 	{
 		std::set <std::size_t> for_hash;
 		std::set<std::string>::iterator word = begin;
 		std::size_t count_of_collisions = 0;
-		std::size_t hash = 0;
-
+		function = static_cast<Function>(i);
+		std::cout << ++i << std::endl;
 		for (auto elements_now=0U; word != end; ++word)
 		{
-			hash = function_array[i](*word,length) % count_of_elements;
+			hash = Hash(*word, length, function) % count_of_elements;
 			if ((for_hash.insert(hash)).second) {}
 			else
 			{
