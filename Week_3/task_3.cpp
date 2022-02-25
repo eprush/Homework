@@ -4,8 +4,8 @@
 
 int main()
 {
-	const std::size_t count_of_elements = 20000;
-	const std::size_t step = 2000;
+	const std::size_t count_of_elements = 320000;
+	const std::size_t step = 40000;
 	const std::size_t length = 10;
 	const std::set <std::string> words = make_random_words(count_of_elements, length);
 	std::set <std::string>::const_iterator end = words.end();
@@ -23,7 +23,7 @@ int main()
 		std::cout << ++i << std::endl;
 		for (auto elements_now=0U; word != end; ++word)
 		{
-			hash = Hash(*word, length, function) % count_of_elements;
+			hash = Hash(*word, length, function);
 			if ((for_hash.insert(hash)).second) {}
 			else
 			{
