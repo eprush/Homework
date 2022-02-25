@@ -30,12 +30,12 @@ int main()
 				++count_of_collisions;
 			}
 
-			if ((++elements_now) % step == 0) //for graphic
-			{
-				std::cout << "Count of elements equals " << elements_now << std::endl <<
-					"Count of collisions equals " << count_of_collisions << std::endl <<
-					std::endl;
-			}
+			//if ((++elements_now) % step == 0) //for graphic
+			//{
+			//	std::cout << "Count of elements equals " << elements_now << std::endl <<
+			//		"Count of collisions equals " << count_of_collisions << std::endl <<
+			//		std::endl;
+			//}
 		}
 		std::cout << "Count of elements equals " << count_of_elements << std::endl <<
 			"Count of collisions equals " << count_of_collisions << std::endl <<
