@@ -23,11 +23,22 @@ int main()
 		std::cout << ++i << std::endl;
 		for (auto elements_now=0U; word != end; ++word)
 		{
-			hash = Hash(*word, length, function);
-			if ((for_hash.insert(hash)).second) {}
-			else
+			try
 			{
-				++count_of_collisions;
+				hash = Hash(*word, length, function);
+				if ((for_hash.insert(hash)).second) {}
+				else
+				{
+					++count_of_collisions;
+				}
+			}
+			catch (std::exception& exception)
+			{
+				std::cerr << exception.what() << std::endl;
+			}
+			catch (...)
+			{
+				std::cerr << "Undefined error" << std::endl;
 			}
 
 			//if ((++elements_now) % step == 0) //for graphic
