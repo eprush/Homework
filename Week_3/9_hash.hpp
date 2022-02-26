@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iterator>
+#include <exception>
 
 enum class Function
 {
@@ -187,6 +188,7 @@ std::size_t Hash(std::string str, std::size_t length, Function function)
     case(Function::SDBMHash):
         return SDBMHash(str, length);
         break;
+    default:
+        throw std::exception("Unfound hash function");
     }
-
 }
