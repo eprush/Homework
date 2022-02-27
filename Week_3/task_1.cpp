@@ -12,13 +12,14 @@ int main()
     long long multiset_time = 0;
     const std::size_t measures = 5;
     const std::size_t count = 100000;
+    std::mt19937 gen{ std::random_device()() };
+    std::uniform_int_distribution<int> uid(0, count);
+
     for (auto j = 0U; j < measures; ++j)
     {
-        std::mt19937 gen{ std::random_device()() };
-        std::uniform_int_distribution<int> uid(0, count);
         std::vector<int> v(count);
-        std::vector<int>::iterator begin = v.begin();
-        std::vector<int>::iterator end = v.end();
+        const auto begin = v.begin();
+        const auto end = v.end();
         std::generate(begin, end, [&uid, &gen]()
             { return uid(gen); });
 
