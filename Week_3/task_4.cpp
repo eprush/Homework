@@ -1,38 +1,9 @@
 #include <iostream>
-#include <string>
-
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/member.hpp>
-#include <boost/multi_index/hashed_index.hpp>
-#include <boost/multi_index/ordered_index.hpp>
-#include <boost/multi_index/random_access_index.hpp>
-
-using namespace boost::multi_index;
-
-struct Human
-{
-	std::string name;
-	std::size_t phone;
-};
-
-using human_multi_index = multi_index_container <
-	Human, indexed_by <
-	ordered_non_unique <
-	member < Human, std::string, &Human::name > >,
-	random_access <>,
-	hashed_non_unique <
-	member < Human, std::size_t, &Human::phone > > ,
-	hashed_non_unique <
-	member < Human, std::string, &Human::name > >
-	> >;
+#include "guide.hpp"
 
 int main()
 {
-	const std::size_t sort_index = 0;
-	const std::size_t vector_index = 1;
-	const std::size_t phone_index = 2;
-	const std::size_t name_index = 3;
-
+	const std::size_t sort = 0, vector = 1, phone = 2, name = 3;
 	human_multi_index humans;
 
 	humans.insert({ "Ivan",    850 });
@@ -41,26 +12,29 @@ int main()
 	humans.insert({ "Anna", 9958 });
 	humans.insert({ "Daria", 850 });
 
-	const auto& ordered_index = humans.get< sort_index >();
-	auto sort_begin = ordered_index.begin();
-	const auto sort_end = ordered_index.end();
+	const auto& sort_index = humans.get< sort >();
+	auto sort_begin = sort_index.begin();
+	const auto sort_end = sort_index.end();
 	for (; sort_begin != sort_end; ++sort_begin)
-	{
 		std::cout << sort_begin->name << std::endl;
-	}
-	std::cout << "\n";
 
-	const auto& random_access_index = humans.get < vector_index >();
-	std::cout << random_access_index[4].name << std::endl << "\n";
+	const auto& vector_index = humans.get < vector >();
+	std::cout << vector_index.at(4).name << std::endl << "\n";
 
-	const auto& hashed_name_index = humans.get< name_index >();
-	auto name_iterator = hashed_name_index.find("Daria");
-	std::cout << name_iterator->phone << std::endl << "\n";
+	const auto& name_index = humans.get< name >();
+	auto name_iterator = name_index.find("Daria");
+	if (name_iterator != name_index.end())
+		std::cout << name_iterator->phone << std::endl << "\n";
+	else
+		std::cerr << "Search error" << std::endl;
 
 
-	const auto& hashed_phone_index = humans.get < phone_index >();
-	auto phone_iterator = hashed_phone_index.find(850);
-	std::cout << phone_iterator->name << std::endl << "\n";
+	const auto& phone_index = humans.get < phone >();
+	auto phone_iterator = phone_index.find(850);
+	if (phone_iterator != phone_index.end())
+		std::cout << phone_iterator->phone << std::endl << "\n";
+	else
+		std::cerr << "Search error" << std::endl;
 
 	system("pause");
 	return EXIT_SUCCESS;
