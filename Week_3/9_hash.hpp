@@ -157,37 +157,28 @@ std::size_t APHash(std::string str, std::size_t length)
     return hash;
 }
 
-std::size_t Hash(std::string str, std::size_t length, Function function)
+std::size_t Hash(std::string str, Function function , std::size_t length = 10)
 {
     switch (function)
     {
     case(Function::RSHash):
         return RSHash(str, length);
-        break;
     case(Function::JSHash):
         return JSHash(str, length);
-        break;
     case(Function::ELFHash):
         return ELFHash(str, length);
-        break;
     case(Function::APHash):
         return APHash(str, length);
-        break;
     case(Function::BKDRHash):
         return BKDRHash(str, length);
-        break;
     case(Function::DEKHash):
         return DEKHash(str, length);
-        break;
     case(Function::DJBHash):
         return DJBHash(str, length);
-        break;
     case(Function::PJWHash):
         return PJWHash(str, length);
-        break;
     case(Function::SDBMHash):
         return SDBMHash(str, length);
-        break;
     default:
         throw std::exception("Unfound hash function");
     }

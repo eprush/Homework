@@ -2,57 +2,45 @@
 #include "words.hpp"
 #include "9_hash.hpp"
 
+std::set < std::string > make_random_words(std::size_t N, std::size_t length = 10) // length = 10 - good enough
+{
+	std::uniform_int_distribution <> letter(97, 122);
+	std::default_random_engine e(static_cast <std::size_t> (
+		std::chrono::system_clock::now().time_since_epoch().count()));
+
+	std::set < std::string > words;
+
+	for (std::string s(length, '_'); std::size(words) < N; words.insert(s))
+		for (auto& c : s)
+			c = letter(e);
+
+	return words;
+}
+
 int main()
 {
-	const std::size_t count_of_elements = 320000;
-	const std::size_t step = 40000;
-	const std::size_t length = 10;
-	const std::set <std::string> words = make_random_words(count_of_elements, length);
-	std::set <std::string>::const_iterator end = words.end();
-	std::set <std::string>::const_iterator begin = words.begin();
+	const std::size_t count_of_elements = 640000, step = 4000, count_of_function = 9;
+	const auto words = make_random_words(count_of_elements);
+	const auto end = words.end(), begin = words.begin();
+	auto word = begin;
 
-	const std::size_t count_of_function = 9;
 	Function function;
-	std::size_t hash = 0;
-	for (auto i = 0U; i < count_of_function; )
+	for (auto i = 0U; i < count_of_function; word = begin)
 	{
 		std::set <std::size_t> for_hash;
-		std::set<std::string>::iterator word = begin;
 		std::size_t count_of_collisions = 0;
-		function = static_cast<Function>(i);
-		std::cout << ++i << std::endl;
-		for (auto elements_now=0U; word != end; ++word)
+		function = static_cast<Function>(i++);
+		for (; word != end; ++word)
 		{
 			try
 			{
-				hash = Hash(*word, length, function);
-				if ((for_hash.insert(hash)).second) {}
-				else
-				{
-					++count_of_collisions;
-				}
+				if (!(for_hash.insert(Hash(*word, function))).second) { ++count_of_collisions; }
 			}
-			catch (std::exception& exception)
-			{
-				std::cerr << exception.what() << std::endl;
-			}
-			catch (...)
-			{
-				std::cerr << "Undefined error" << std::endl;
-			}
-
-			//if ((++elements_now) % step == 0) //for graphic
-			//{
-			//	std::cout << "Count of elements equals " << elements_now << std::endl <<
-			//		"Count of collisions equals " << count_of_collisions << std::endl <<
-			//		std::endl;
-			//}
+			catch (const std::exception& exception) { std::cerr << exception.what() << std::endl;}
+			catch (...) { std::cerr << "Undefined error" << std::endl;}
 		}
-		std::cout << "Count of elements equals " << count_of_elements << std::endl <<
-			"Count of collisions equals " << count_of_collisions << std::endl <<
-			std::endl;
+		std::cout << count_of_collisions << std::endl << "\n";
 	}
-
 	system("pause");
 	return EXIT_SUCCESS;
 }
