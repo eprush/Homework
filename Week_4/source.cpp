@@ -16,7 +16,17 @@ int main()
 	auto result_pair = std::minmax_element(std::cbegin(vector), std::cend(vector));
 	std::cout << *result_pair.first  << " " << *result_pair.second << std::endl;
 
-
+	auto simple = [](int element)
+	{
+		for (auto i = 0U; i < std::sqrt(element); ++i)
+		{
+			if (!(element % i))
+				return false;
+		}
+		return true;
+	};
+	auto simple_iterator = std::find_if(std::cbegin(vector), std::cend(vector), simple);
+	std::cout << *simple_iterator << std::endl;
 
 	/*std::for_each(std::begin(vector), std::end(vector), [](auto element) {std::cout << element << std::endl; });*/
 
