@@ -12,12 +12,12 @@ int main()
 	std::mt19937 gen{ std::random_device()() };
 	std::uniform_int_distribution<int> uid(0, count_of_elements);
 	std::vector<int> v(count_of_elements);
-	auto begin = v.begin(), end = v.end();
+	auto begin = std::begin(v), end = std::end(v);
 	std::generate(begin, end, [&uid, &gen]()
 		{ return uid(gen); });
 
 	auto words = make_random_words(count_of_elements);
-	auto word = words.begin();
+	auto word = std::begin(words);
 	std::set <std::size_t> s;
 	std::size_t count_of_collisions = 0;
 

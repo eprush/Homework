@@ -15,7 +15,7 @@ int main()
     for (auto j = 0U; j < measures; ++j)
     {
         std::vector<int> v(count);
-        const auto begin = v.begin(), end = v.end();
+        const auto begin = std::begin(v), end = std::end(v);
         std::generate(begin, end, [&uid, &gen]() { return uid(gen); });
         std::multiset<int> s;
 
