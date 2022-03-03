@@ -35,7 +35,11 @@ int main()
 	std::uniform_int_distribution <int> uid;
 	std::generate(std::begin(v), std::end(v), [&uid, &dre]() {return uid(dre); });
 
-	std::for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
+	auto sum = 0U;
+	std::for_each(std::cbegin(v), std::cend(v), [&sum](auto element) {sum += element; });
+	std::cout << sum << std::endl;
+
+	/*std::for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });*/
 
 
 
