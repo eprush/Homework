@@ -21,7 +21,7 @@ int main()
 {
 	const std::size_t count_of_elements = 640000, step = 4000, count_of_function = 9;
 	const auto words = make_random_words(count_of_elements);
-	const auto end = words.end(), begin = words.begin();
+	const auto end = std::end(words), begin = std::begin(words);
 	auto word = begin;
 
 	Function function;
