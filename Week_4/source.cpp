@@ -4,7 +4,7 @@ int main()
 {
 	std::vector <int> vector(10);
 	std::iota(std::begin(vector), std::end(vector), 1);
-
+	std::default_random_engine dre(0);
 	std::copy(std::istream_iterator<int>(std::cin), std::istream_iterator<int>(), std::back_inserter(vector));
 	std::shuffle(std::begin(vector), std::end(vector), std::default_random_engine(0));
 	std::sort(std::begin(vector), std::end(vector));
@@ -32,8 +32,10 @@ int main()
 	std::copy(std::cbegin(vector), std::cend(vector), std::back_inserter(v));
 	std::transform(std::begin(vector), std::end(vector), std::begin(v), std::begin(vector), [](auto rhs, auto lhs) {return rhs * lhs; });
 
+	std::uniform_int_distribution <int> uid;
+	std::generate(std::begin(v), std::end(v), [&uid, &dre]() {return uid(dre); });
 
-	/*std::for_each(std::begin(vector), std::end(vector), [](auto element) {std::cout << element << std::endl; });*/
+	std::for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
 
 
 
