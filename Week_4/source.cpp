@@ -6,8 +6,8 @@ int main()
 	std::iota(std::begin(vector), std::end(vector), 1);
 
 	std::copy(std::istream_iterator<int>(std::cin), std::istream_iterator<int>(), std::back_inserter(vector));
+	std::shuffle(std::begin(vector), std::end(vector), std::default_random_engine(0));
 	std::for_each(std::begin(vector), std::end(vector), [](auto element) {std::cout << element << std::endl; });
-
 
 
 	system("pause");
