@@ -51,6 +51,7 @@ int main()
 	std::reverse(std::begin(v_3), std::end(v_3));
 
 	std::partial_sort(std::begin(v_3), std::next(std::begin(v_3), 2), std::end(v_3));
+	std::for_each(std::begin(v_3), std::next(std::begin(v_3), 2), [](auto element) {std::cout << element << std::endl; });
 	//осталось вывести первые три элемента
 
 
@@ -60,6 +61,8 @@ int main()
 	std::vector<int> v_4;
 	std::merge(std::begin(v_1), std::end(v_1), std::begin(v_2), std::end(v_2), std::back_inserter(v_4));
 
+	auto left = std::lower_bound(std::begin(v_4), std::end(v_4), 1);
+	auto right = std::upper_bound(std::begin(v_4), std::end(v_4), 1);
 
 	std::for_each(std::begin(v_3), std::end(v_3), [](auto element) {std::cout << element << std::endl; });
 	system("pause");
