@@ -10,11 +10,11 @@ int main()
 	std::sort(std::begin(vector), std::end(vector));
 	vector.erase(std::unique(std::begin(vector), std::end(vector)), std::end(vector));
 
-	int count  = std::count_if(std::begin(vector), std::end(vector), [](auto element) { if (element % 2) return element; });
+	int count = std::count_if(std::begin(vector), std::end(vector), [](auto element) { if (element % 2) return element; });
 	std::cout << count << std::endl << "\n";
 
 	auto result_pair = std::minmax_element(std::cbegin(vector), std::cend(vector));
-	std::cout << *result_pair.first  << " " << *result_pair.second << std::endl;
+	std::cout << *result_pair.first << " " << *result_pair.second << std::endl;
 
 	auto simple = [](auto element)
 	{
@@ -39,10 +39,11 @@ int main()
 	std::for_each(std::cbegin(v), std::cend(v), [&sum](auto element) {sum += element; });
 	std::cout << sum << std::endl;
 
-	/*std::for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });*/
+	std::fill(std::begin(v), std::next(std::begin(v), 3), 1);
 
 
 
+	std::for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
 	system("pause");
 	return EXIT_SUCCESS;
 }
