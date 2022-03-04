@@ -51,7 +51,7 @@ int main()
 	std::reverse(std::begin(v_3), std::end(v_3));
 
 	std::partial_sort(std::begin(v_3), std::next(std::begin(v_3), 2), std::end(v_3));
-	//осталось вывести первые три элемента
+	//РѕСЃС‚Р°Р»РѕСЃСЊ РІС‹РІРµСЃС‚Рё РїРµСЂРІС‹Рµ С‚СЂРё СЌР»РµРјРµРЅС‚Р°
 
 
 	std::sort(std::begin(v_1), std::end(v_1));
