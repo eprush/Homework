@@ -45,6 +45,20 @@ int main()
 	std::copy(std::cbegin(v_1), std::cend(v_1), std::back_inserter(v_3));
 	std::transform(std::begin(v_3), std::end(v_3), std::begin(v_2), std::begin(v_3), [](auto rhs, auto lhs) {return rhs - lhs; });
 
+	std::replace_if(std::begin(v_3), std::end(v_3), std::bind(std::less<int>(), 0), 0);
+	v_3.erase(std::remove(std::begin(v_3), std::end(v_3), 0), std::end(v_3));
+
+	std::reverse(std::begin(v_3), std::end(v_3));
+
+	std::partial_sort(std::begin(v_3), std::next(std::begin(v_3), 2), std::end(v_3));
+	//осталось вывести первые три элемента
+
+
+	std::sort(std::begin(v_1), std::end(v_1));
+	std::sort(std::begin(v_2), std::end(v_2));
+
+	std::vector<int> v_4;
+	std::merge(std::begin(v_1), std::end(v_1), std::begin(v_2), std::end(v_2), std::back_inserter(v_4));
 
 
 	std::for_each(std::begin(v_3), std::end(v_3), [](auto element) {std::cout << element << std::endl; });

@@ -6,3 +6,4 @@
 #include <iterator>
 #include <vector>
 #include <cmath>
+#include <functional>
