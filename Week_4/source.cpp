@@ -79,13 +79,13 @@ int main()
 	auto range = std::equal_range(std::begin(v_4), std::end(v_4), 1);
 	std::cout << std::distance(range.first, range.second) << std::endl << "\n";
 
-	/*std::copy(std::begin(v_1), std::end(v_1), std::ostream_iterator <std::vector<int>>(std::cout));
+	std::copy(std::begin(v_1), std::end(v_1), std::ostream_iterator <std::vector<int>>(std::cout));
 	std::cout << "n";
 	std::copy(std::begin(v_2), std::end(v_2), std::ostream_iterator <std::vector<int>>(std::cout));
 	std::cout << "n";
 	std::copy(std::begin(v_3), std::end(v_3), std::ostream_iterator <std::vector<int>>(std::cout));
 	std::cout << "n";
-	std::copy(std::begin(v_4), std::end(v_4), std::ostream_iterator <std::vector<int>>(std::cout));*/
+	std::copy(std::begin(v_4), std::end(v_4), std::ostream_iterator <std::vector<int>>(std::cout));
 	system("pause");
 	return EXIT_SUCCESS;
 }
