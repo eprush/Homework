@@ -20,7 +20,7 @@ public:
 		}
 		catch (...)
 		{
-			std::cerr << "Unknown error in " << __LINE__ << " line" << std::endl;
+			std::cerr << "Undefined error in " << __LINE__ << " line" << std::endl;
 		}
 	}
 
@@ -32,9 +32,9 @@ public:
 			m_turned_on = false;
 			microseconds_t delta_time(m_delta);
 			m_time += delta_time;
-			print_time(m_delta);
 		}
 	}
+
 	void resume()
 	{
 		if (!m_turned_on)
@@ -51,13 +51,6 @@ public:
 	long long delta_time() const noexcept
 	{
 		return m_delta;
-	}
-
-private:
-	void print_time(long long delta_time)
-	{
-		std::cout << "The working time of this section of the code is equal " << delta_time << " microseconds" << std::endl;
-		std::cout << "The working time of all code is equal " << m_time.count() << " microseconds" << std::endl;
 	}
 
 private:
