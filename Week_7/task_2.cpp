@@ -1,8 +1,9 @@
-#include "Threads_guard.hpp"
 #include "C:\Users\ASUS\OneDrive\Рабочий стол\Homework\Week_3\timer.hpp"
+#include "Threads_guard.hpp"
 #include <numeric>
 #include <random>
 #include <future>
+#include <fstream>
 
 template < typename Iterator, typename T >
 struct accumulate_block
@@ -14,7 +15,7 @@ struct accumulate_block
 };
 
 template < typename Iterator, typename T >
-void parallel_accumulate(Iterator first, Iterator last, std::size_t num_threads, T init)
+T parallel_accumulate(Iterator first, Iterator last, std::size_t num_threads, T init)
 //void for comfort call in measure()
 {
 	const std::size_t length = std::distance(first, last);
@@ -48,36 +49,75 @@ void parallel_accumulate(Iterator first, Iterator last, std::size_t num_threads,
 		init += futures[i].get();
 	}
 	init += accumulate_block < Iterator, T >()(block_start, last);
-}
 
-std::size_t optimize()
-{
-
-
-
-	return EXIT_SUCCESS;
+	return init;
 }
 
 void measure(std::vector<int>& v, std::size_t start = 16, std::size_t count = 500)
 {
 	Timer t;
+	std::ofstream outf("measures.xls");
+	if (!outf)
+	{
+		throw std::ios_base::failure("File could not be opened for writing");
+	}
+
+	int result = 0;
 	for (auto i = 0U; i < count; ++i)
 	{
 		t.resume();
-		parallel_accumulate(std::begin(v), std::end(v), start + i, 0);//comfort call
+		result = parallel_accumulate(std::begin(v), std::end(v), start + i, 0);
 		t.pause();
-		std::cout << start + i << "  " <<  t.delta_time() << std::endl;
+		outf << t.delta_time() << std::endl;
 	}
 }
 
-int main(int argc, char** argv)
+std::size_t optimize(std::size_t start = 16, std::size_t count = 500)
+{
+	std::ifstream inf("measures.xls");
+	inf.seekg(0, std::ios::beg);
+
+	if (!inf)
+	{
+		throw std::ios::failure("File could not be opened for reading");
+	}
+
+	double longer_time = 0.0, less_time = 0.0;
+	count += start;
+	inf >> longer_time;
+	inf >> less_time;
+	while (longer_time - less_time >= 1.0 and start <= count)
+	{
+		++start;
+		longer_time = less_time;
+		inf >> less_time;
+	}
+
+	return start;
+}
+
+int main()
 {
 	std::vector < int > v(100);
 	std::iota(std::begin(v), std::end(v), 1);
 
-	measure(v);
-
-	std::cout << "The most optimal count of currents equals " << optimize() << std::endl;
+	try 
+	{ 
+		measure(v); 
+		std::cout << "The most optimal count of currents equals " << optimize() << std::endl;//19
+	}
+	catch (std::ios_base::failure& exception)
+	{
+		std::cerr << "Standard exception: " << exception.what() << " in " << __LINE__ << " line" <<  std::endl;
+	}
+	catch (std::exception& exception)
+	{
+		std::cerr << "Standard exception: " << exception.what() << " in " << __LINE__ << " line" << std::endl;
+	}
+	catch (...)
+	{
+		std::cerr << "Undefined error in " << __LINE__ << std::endl;
+	}
 
 	system("pause");
 	return EXIT_SUCCESS;
