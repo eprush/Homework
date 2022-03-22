@@ -16,7 +16,6 @@ struct accumulate_block
 
 template < typename Iterator, typename T >
 T parallel_accumulate(Iterator first, Iterator last, std::size_t num_threads, T init)
-//void for comfort call in measure()
 {
 	const std::size_t length = std::distance(first, last);
 
