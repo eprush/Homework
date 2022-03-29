@@ -6,26 +6,24 @@
 
 
 template <class Iterator, class Func>
-void par_for_each(Iterator begin, Iterator end, Func lambda)
+constexpr Func par_for_each(Iterator begin, Iterator end, Func lambda)
 {
 	const std::size_t length = std::distance(begin, end);
 	const std::size_t max_length = 16;
 	if (length <= max_length)
 	{
-		std::for_each(begin, end, lambda);
+		return std::for_each(begin, end, lambda);
 	}
 	else
 	{
 		Iterator middle = begin;
 		std::advance(middle, length / 2);
 
-		std::future < void > first_half_result =
-			std::async(par_for_each < Iterator, Func >, begin, middle, lambda);
-		std::future < void > second_half_result =
-			std::async(par_for_each < Iterator, Func >, middle, end, lambda);
-	
-		first_half_result.get();
-		second_half_result.get();
+		std::future < Func > first_half_result =
+			std::async(std::launch::async, par_for_each < Iterator, Func >, begin, middle, lambda);
+		Func second_half_result = par_for_each (middle, end, Func());
+		Func from_first_half = first_half_result.get();
+		return lambda;
 	}
 }
 
