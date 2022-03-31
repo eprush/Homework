@@ -38,8 +38,8 @@ double par_Monte_Carlo(std::size_t points)
 
 	std::vector < std::future < double > > futures(num_threads - 1);
 	std::vector < std::thread > threads(num_threads - 1);
-
-	for (auto i = 0U; i < (num_threads - 1); ++i)
+	
+	for (auto i = 0U; i < num_threads - 1; ++i)
 	{
 		std::packaged_task<double (std::size_t, std::size_t)> task{count_in_circle};
 		futures[i] = task.get_future();

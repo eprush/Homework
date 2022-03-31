@@ -32,6 +32,7 @@ int main()
 	std::vector<int> v(100);
 	std::iota(std::begin(v), std::end(v), 1);
 
+
 	par_for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
 
 	system("pause");
