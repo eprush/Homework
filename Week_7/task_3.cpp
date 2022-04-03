@@ -1,29 +1,39 @@
+#include "Threads_guard.hpp"
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <thread>
 #include <future>
 #include <algorithm>
 
 
 template <class Iterator, class Func>
-constexpr Func par_for_each(Iterator begin, Iterator end, Func lambda)
+void par_for_each(Iterator begin, Iterator end, Func lambda)
 {
 	const std::size_t length = std::distance(begin, end);
 	const std::size_t max_length = 16;
 	if (length <= max_length)
 	{
-		return std::for_each(begin, end, lambda);
+		std::for_each(begin, end, lambda);
 	}
 	else
 	{
-		Iterator middle = begin;
-		std::advance(middle, length / 2);
+		const auto num_threads = std::thread::hardware_concurrency() != 0 ? std::thread::hardware_concurrency() : 2;
+		const auto block_size = length / num_threads;
+		std::vector < std::thread >		  threads(num_threads - 1);
+		Threads_guard guard(threads);
+		auto block_start = begin;
+		for (auto i = 0U; i < num_threads - 1; ++i)
+		{
+			Iterator block_end = block_start;
+			std::advance(block_end, block_size);
 
-		std::future < Func > first_half_result =
-			std::async(std::launch::async, par_for_each < Iterator, Func >, begin, middle, lambda);
-		Func second_half_result = par_for_each (middle, end, Func());
-		Func from_first_half = first_half_result.get();
-		return lambda;
+			std::packaged_task < void(Iterator, Iterator, Func) > task{par_for_each < Iterator, Func >};
+			threads[i] = std::thread(std::move(task), block_start, block_end, lambda);
+
+			block_start = block_end;
+		}
+		par_for_each (block_start, end, lambda);
 	}
 }
 
