@@ -1,10 +1,6 @@
-#include "Threads_guard.hpp"
 #include <iostream>
 #include <numeric>
-#include <vector>
-#include <thread>
 #include <future>
-#include <algorithm>
 
 
 template <class Iterator, class Func>
@@ -18,22 +14,15 @@ void par_for_each(Iterator begin, Iterator end, Func lambda)
 	}
 	else
 	{
-		const auto num_threads = std::thread::hardware_concurrency() != 0 ? std::thread::hardware_concurrency() : 2;
-		const auto block_size = length / num_threads;
-		std::vector < std::thread >		  threads(num_threads - 1);
-		Threads_guard guard(threads);
-		auto block_start = begin;
-		for (auto i = 0U; i < num_threads - 1; ++i)
-		{
-			Iterator block_end = block_start;
-			std::advance(block_end, block_size);
 
-			std::packaged_task < void(Iterator, Iterator, Func) > task{par_for_each < Iterator, Func >};
-			threads[i] = std::thread(std::move(task), block_start, block_end, lambda);
+		Iterator middle = begin;
+		std::advance(middle, length / 2);
 
-			block_start = block_end;
-		}
-		par_for_each (block_start, end, lambda);
+		std::future < void > first_half_result = std::async(
+			std::launch::async, par_for_each<Iterator, Func>, begin, middle, lambda);
+	
+		first_half_result.get();
+		par_for_each (middle, end, lambda);
 	}
 }
 
@@ -41,7 +30,6 @@ int main()
 {
 	std::vector<int> v(100);
 	std::iota(std::begin(v), std::end(v), 1);
-
 
 	par_for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
 
