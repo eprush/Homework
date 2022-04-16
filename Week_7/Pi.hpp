@@ -5,14 +5,23 @@
 #include <thread>
 #include <random>
 
+enum class Execution_policy
+{
+	Seq,
+	Par,
+	Global
+};
+
 class Pi
 {
 public:
-	double compute(bool is_seq = true, std::size_t points = 1000000)
+	double compute(const Execution_policy& policy, std::size_t points = 1000000)
 	{
-		if(is_seq)
+		if(policy == Execution_policy::Seq)
 			return Monte_Carlo(points);
-		return par_Monte_Carlo(points);
+		else if(policy == Execution_policy::Par)
+			return par_Monte_Carlo(points);
+		return global_counter_Monte_Carlo(points);
 	}
 
 private:
@@ -21,6 +30,7 @@ private:
 		return ((x - radius) * (x - radius) + (y - radius) * (y - radius) <= radius*radius);
 	}
 
+	void count_in_circle(std::size_t points, std::size_t& result);
 	std::size_t count_in_circle(std::size_t points);
 
 private:
@@ -30,4 +40,6 @@ private:
 	}
 
 	double par_Monte_Carlo(std::size_t points);
+
+	double global_counter_Monte_Carlo(std::size_t points);
 };

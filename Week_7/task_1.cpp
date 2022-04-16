@@ -5,12 +5,19 @@ int main()
 {
 	Pi pi;
 	Timer t;
+
 	t.resume();
-	std::cout << pi.compute() << " ";
+	std::cout << pi.compute(Execution_policy::Seq) << " ";
 	t.pause();
 	std::cout << t.delta_time() << "\n";
+
 	t.resume();
-	std::cout << pi.compute(false) << " ";
+	std::cout << pi.compute(Execution_policy::Par) << " ";
+	t.pause();
+	std::cout << t.delta_time() << "\n";
+
+	t.resume();
+	std::cout << pi.compute(Execution_policy::Global) << " ";
 	t.pause();
 	std::cout << t.delta_time() << std::endl;
 	//Output

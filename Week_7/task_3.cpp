@@ -14,25 +14,24 @@ void par_for_each(Iterator begin, Iterator end, Func lambda)
 	}
 	else
 	{
-
 		Iterator middle = begin;
 		std::advance(middle, length / 2);
 
-		std::future < void > first_half_result = std::async(
+		auto first_half_result = std::async(
 			std::launch::async, par_for_each<Iterator, Func>, begin, middle, lambda);
 	
-		first_half_result.get();
 		par_for_each (middle, end, lambda);
+		first_half_result.get();
 	}
 }
 
-int main()
-{
-	std::vector<int> v(100);
-	std::iota(std::begin(v), std::end(v), 1);
-
-	par_for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
-
-	system("pause");
-	return EXIT_SUCCESS;
-}
+//int main()
+//{
+//	std::vector<int> v(100);
+//	std::iota(std::begin(v), std::end(v), 1);
+//
+//	par_for_each(std::begin(v), std::end(v), [](auto element) {std::cout << element << std::endl; });
+//
+//	system("pause");
+//	return EXIT_SUCCESS;
+//}
