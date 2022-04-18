@@ -41,7 +41,9 @@ double Pi::global_counter_Monte_Carlo(std::size_t points)
 
 	for (auto i = 0U; i < num_threads - 1; ++i)
 	{
-		std::packaged_task<void(std::size_t, std::size_t&)> task([this](auto points, auto& result){ Pi::count_in_circle(points, result); });
+		std::packaged_task<void(std::size_t, std::size_t&)> task(
+			[this](auto points, auto& result){ Pi::count_in_circle(points, result); });
+
 		threads[i] = std::thread(std::move(task), points / num_threads, std::ref(result));
 		threads[i].join();
 	}
@@ -55,6 +57,7 @@ double Pi::par_Monte_Carlo(std::size_t points)
 
 	std::vector < std::future < std::size_t > > futures(num_threads - 1);
 	std::vector < std::thread > threads(num_threads - 1);
+	auto result = count_in_circle(points / num_threads);
 
 	for (auto i = 0U; i < num_threads - 1; ++i)
 	{
@@ -63,12 +66,11 @@ double Pi::par_Monte_Carlo(std::size_t points)
 		threads[i] = std::thread(std::move(task), points / num_threads);
 	}
 
-	auto result = count_in_circle(points / num_threads);
 	for (auto i = 0U; i < num_threads - 1; ++i)
 	{
 		result += futures[i].get();
 		threads[i].join();
 	}
-
+	
 	return 4.0 * result / points;
 }
