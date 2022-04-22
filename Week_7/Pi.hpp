@@ -3,6 +3,7 @@
 #include <numeric>
 #include <future>
 #include <thread>
+#include <mutex>
 #include <random>
 
 enum class Execution_policy
@@ -42,4 +43,7 @@ private:
 	double par_Monte_Carlo(std::size_t points);
 
 	double global_counter_Monte_Carlo(std::size_t points);
+
+private:
+	mutable std::mutex m_mutex;
 };

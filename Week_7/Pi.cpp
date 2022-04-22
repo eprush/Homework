@@ -6,13 +6,17 @@ void Pi::count_in_circle(std::size_t points, std::size_t& result)
 	std::default_random_engine engine(hasher(std::this_thread::get_id()));
 	std::uniform_real_distribution <double> uid(0.0, 2.0);
 
+	auto count = 0U;
 	for (auto i = 0U; i < points; ++i)
 	{
 		if (in_circle(uid(engine), uid(engine)))
 		{
-			++result;
+			++count;
 		}
 	}
+
+	std::lock_guard<std::mutex> lock(m_mutex);
+	result += count;
 }
 
 std::size_t Pi::count_in_circle(std::size_t points)
@@ -45,6 +49,10 @@ double Pi::global_counter_Monte_Carlo(std::size_t points)
 			[this](auto points, auto& result){ Pi::count_in_circle(points, result); });
 
 		threads[i] = std::thread(std::move(task), points / num_threads, std::ref(result));
+	}
+
+	for (auto i = 0U; i < num_threads - 1; ++i)
+	{
 		threads[i].join();
 	}
 

@@ -21,8 +21,9 @@ int main()
 	t.pause();
 	std::cout << t.delta_time() << std::endl;
 	//Output
-	//3.14264 226345
-	//3.14426 51504
+	/*3.14056 49086
+	3.14018 19891
+	3.14108 19750*/
 	
 	//obviously, parallel algorithm works faster, because
 	//we use a small count of threads
