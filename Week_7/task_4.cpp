@@ -1,4 +1,4 @@
-#include "C:\Users\ASUS\OneDrive\Рабочий стол\Homework\Week_3\timer.hpp"
+#include "..\Week_3\timer.hpp"
 #include <random>
 #include <vector>
 #include <array>
