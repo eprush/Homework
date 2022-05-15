@@ -5,20 +5,11 @@ int main()
     std::string user_name;
     std::cout << "Enter your name: ";
     std::getline(std::cin, user_name);
-
-
-    Chat chat(user_name);
     system("pause");
 
-    chat.run();
-
-
-   /* try
+    try
     {
-        Chat chat(user_name);
-        system("pause");
-
-        chat.run();
+        Chat(user_name).run();
     }
     catch (const std::exception& exception)
     {
@@ -27,7 +18,7 @@ int main()
     catch (...)
     {
         std::cerr << "Undefined error " << std::endl;
-    }*/
+    }
 
     return EXIT_SUCCESS;
 }
